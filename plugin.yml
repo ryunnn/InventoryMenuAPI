@@ -2,4 +2,4 @@ name: InventoryMenuAPI
 main: ryun42680\inventorymenuapi\InventoryMenuAPI
 author: ryun42680
 version: 0.0.1
-api: [ 4.0.0 ]
+api: [ 5.0.0 ]

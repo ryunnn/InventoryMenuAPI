@@ -61,9 +61,10 @@ abstract class InventoryBase extends SimpleInventory
         return $this->firstContents;
     }
 
-    final public function setFirstContents(array $contents): void
+    final public function setFirstContents(array $contents): self
     {
         $this->firstContents = $contents;
+        return $this;
     }
 
     public function onTransaction(Player $player, SlotChangeAction $action, InventoryTransactionEvent $source): void
@@ -80,7 +81,7 @@ abstract class InventoryBase extends SimpleInventory
     final public function send(Player $player): void
     {
         $player->setCurrentWindow($this);
-        $contents = $this->contents;
+        $contents = $this->firstContents;
 
         if (!is_null($this->openHandler)) {
             ($this->openHandler)($player);
@@ -108,7 +109,7 @@ abstract class InventoryBase extends SimpleInventory
     {
         $pk = UpdateBlockPacket::create(
             new BlockPosition($holder->x, $holder->y, $holder->z),
-            RuntimeBlockMapping::getInstance()->toRuntimeId($block->getFullId()),
+            RuntimeBlockMapping::getInstance()->toRuntimeId($block->getStateId()),
             UpdateBlockPacket::FLAG_NETWORK,
             UpdateBlockPacket::DATA_LAYER_NORMAL);
         $network->sendDataPacket($pk);
